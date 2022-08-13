@@ -1,0 +1,45 @@
+{
+    "env": {
+      "node": true,
+      "commonjs": true,
+      "es6": true,
+      "mocha": true
+    },
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "airbnb-base",
+      "airbnb-typescript/base"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "project": "./tsconfig.json"
+    },
+    "rules": {
+      "import/prefer-default-export": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 1}],
+      "no-plusplus": "off",
+      "no-console": "off",
+      "no-async-promise-executor": ["error"],
+      "no-await-in-loop": ["off"],
+      "no-underscore-dangle": [1, { "allow": [] }],
+      "no-extra-parens": ["error"],
+      "no-misleading-character-class": ["error"],
+      "no-template-curly-in-string": ["error"],
+      "accessor-pairs": ["error"],
+      "class-methods-use-this": ["off"],
+      "indent": ["error", 2, { "SwitchCase": 1 }],
+      "linebreak-style": ["error", "unix"],
+      "comma-dangle": ["off"],
+      "no-return-assign": "off",
+      "no-param-reassign": "off",
+      "max-len": ["off"],
+      "require-atomic-updates": ["off"],
+      "@typescript-eslint/no-unused-vars":1,
+      "max-classes-per-file": ["off"],
+      "import/no-cycle": ["off"]
+    }
+  }

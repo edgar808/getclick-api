@@ -1,0 +1,48 @@
+<html>
+
+<head></head>
+
+<body>
+<div>
+
+
+    <table>
+        <%if (params.data.type === 'old') { %>
+        <tr>
+            <td>
+                <p>We've been requested to change your email address on Sinclair. To start the changing process, please <a href=<%= params.data.link %> >Click Here.</a> </p>
+            </td>
+        </tr>
+        <% } %>
+        <%if (params.data.type === 'new') { %>
+            <tr>
+                <td>
+                    <p>We've been requested to change your email address on Sinclair. To end the changing process, please <a href=<%= params.data.link %> >Click Here.</a> </p>
+                </td>
+            </tr>
+        <% } %>
+        <%if (params.data.type === 'confirm') { %>
+            <tr>
+                <td>
+                    <p>Your email is being changed to  <%= params.data.email %>. Please contact us if you didn’t make this change.</p>
+                </td>
+            </tr>
+        <% } %>
+        <tr>
+            <td>
+                <p>If it's not you who tried to make this change, please contact our support.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Regards,
+                    <br>
+                    Sinclair Team</p>
+            </td>
+        </tr>
+
+    </table>
+</div>
+</body>
+
+</html>
