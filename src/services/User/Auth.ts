@@ -48,7 +48,7 @@ export default class Auth {
       userId: user.id, token, type: TokenType.FORGOT_PASSWORD, email,
     });
 
-    await Mailer.afterSignup(email);
+    await Mailer.forgotPassword(email, token);
 
     return { token };
   }
