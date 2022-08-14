@@ -1,11 +1,11 @@
 import { Sequelize } from 'sequelize-typescript';
-import { DB_CONFIG } from '../../config';
+import { Environment } from '../../config';
 import { User } from './User';
 import { Token } from './Token';
 
 const {
   database, username, password, host,
-} = DB_CONFIG;
+} = Environment.DB_CONFIG;
 
 const sequelize = new Sequelize({
   database,

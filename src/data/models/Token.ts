@@ -2,14 +2,14 @@ import {
   Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, BelongsTo, ForeignKey,
 } from 'sequelize-typescript';
 import { User } from './User';
-import { DB_SCHEMA } from '../../config';
+import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
 import { TokenType } from '../misc/enums';
 
 @Table({
   timestamps: true,
   paranoid: true,
-  schema: DB_SCHEMA,
+  schema: Environment.DB_SCHEMA,
   freezeTableName: true,
 })
 

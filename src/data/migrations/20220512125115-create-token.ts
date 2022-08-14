@@ -1,4 +1,4 @@
-import { DB_SCHEMA } from '../../config';
+import { Environment } from '../../config';
 import { USER, TOKEN } from '../misc/resources';
 import { TokenType } from '../misc/enums';
 
@@ -9,7 +9,7 @@ export default {
     await queryInterface.createTable(
       {
         tableName,
-        schema: DB_SCHEMA,
+        schema: Environment.DB_SCHEMA,
       },
       {
         id: {
@@ -68,7 +68,7 @@ export default {
     await queryInterface.dropTable(
       {
         tableName,
-        schema: DB_SCHEMA,
+        schema: Environment.DB_SCHEMA,
       },
     );
   },

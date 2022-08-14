@@ -1,7 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import {
-  accessTokenSecret, accessTokenLife, refreshTokenSecret, refreshTokenLife, verificationTokenSecret, verificationTokenLife,
-} from '../config';
+import { Environment } from '../config';
 
 export const generateToken = async ({
   data,
@@ -16,14 +14,14 @@ export const generateToken = async ({
 export const generateTokens = async (userId: any, role: any) => {
   const accessToken = await generateToken({
     data: { userId, role },
-    secret: accessTokenSecret,
-    expiresIn: accessTokenLife,
+    secret: Environment.AccessTokenSecret,
+    expiresIn: Environment.AccessTokenLife,
   });
 
   const refreshToken = await generateToken({
     data: { userId, role },
-    secret: refreshTokenSecret,
-    expiresIn: refreshTokenLife,
+    secret: Environment.RefreshTokenSecret,
+    expiresIn: Environment.RefreshTokenLife,
   });
 
   return { accessToken, refreshToken };
@@ -31,14 +29,14 @@ export const generateTokens = async (userId: any, role: any) => {
 
 export const generateVerifyToken = async (userId: any) => generateToken({
   data: { userId },
-  secret: verificationTokenSecret,
-  expiresIn: verificationTokenLife,
+  secret: Environment.VerificationTokenSecret,
+  expiresIn: Environment.VerificationTokenLife,
 });
 
 export const generateTokenByParams = async (data: any) => generateToken({
   data,
-  secret: verificationTokenSecret,
-  expiresIn: verificationTokenLife,
+  secret: Environment.VerificationTokenSecret,
+  expiresIn: Environment.VerificationTokenLife,
 });
 
 export const verify = async (token: any, secret: any) => jwt.verify(token, secret);

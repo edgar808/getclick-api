@@ -4,7 +4,7 @@ import SignUpType from './typing/SignUpType';
 import UserUpdateType from './typing/UserUpdateType';
 import UserGetType from './typing/UserGetType';
 import { User } from '../../data/models/User';
-import { cryptoConfig } from '../../config';
+import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import { arrangeSequelizeInterfaceData } from '../../utils/sequelize';
 
@@ -14,7 +14,7 @@ export default class UserService {
     if (existUser) throw new HttpError(HTTP_CODES.Conflict, ERRORS.USERNAME_ALREADY_EXIST);
     const username = await this.getRandomUsername({ email: data.email });
 
-    const salt = crypto.randomBytes(cryptoConfig.hash.length).toString('hex');
+    const salt = crypto.randomBytes(Environment.CryptoConfig.hash.length).toString('hex');
     const password = await this.generatePassword(salt, data.password);
 
     const user = await User.create({
@@ -120,8 +120,8 @@ export default class UserService {
       crypto.pbkdf2(
         password,
         salt,
-        cryptoConfig.hash.iterations,
-        cryptoConfig.hash.length,
+        Environment.CryptoConfig.hash.iterations,
+        Environment.CryptoConfig.hash.length,
         'sha512',
         (err, key) => {
           if (err) return reject(err);
@@ -132,7 +132,7 @@ export default class UserService {
   }
 
   async setPassword(password: any, user:any) {
-    const salt = crypto.randomBytes(cryptoConfig.hash.length).toString('hex');
+    const salt = crypto.randomBytes(Environment.CryptoConfig.hash.length).toString('hex');
     password = await this.generatePassword(salt, password);
     await user.update({
       password,

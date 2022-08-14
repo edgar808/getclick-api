@@ -1,7 +1,7 @@
 import {
   Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany,
 } from 'sequelize-typescript';
-import { DB_SCHEMA } from '../../config';
+import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
 import { UserRoles } from '../misc/enums';
 import { Token } from './Token';
@@ -9,7 +9,7 @@ import { Token } from './Token';
 @Table({
   timestamps: true,
   paranoid: true,
-  schema: DB_SCHEMA,
+  schema: Environment.DB_SCHEMA,
   freezeTableName: true,
   indexes: [
     {
