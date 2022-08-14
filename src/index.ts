@@ -4,7 +4,7 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import { Server } from 'http';
 import { RoutingControllersOptions, useExpressServer } from 'routing-controllers';
-import { DB_CONFIG, PORT } from './config';
+import { Environment } from './config';
 import { verify } from './middlewares/cors';
 import { Database } from './modules/initializators';
 import apiControllers from './controllers/api';
@@ -40,10 +40,10 @@ useExpressServer(app, {
   ...controllerOptions,
 });
 
-const database = new Database(DB_CONFIG.logging);
+const database = new Database(Environment.DB_CONFIG.logging);
 
 const start = (): Server => app
-  .listen(PORT, () => console.log(`Server running on port ${PORT}`))
+  .listen(Environment.PORT, () => console.log(`Server running on port ${Environment.PORT}`))
   .on('error', (err) => {
     if (err) throw err;
   });

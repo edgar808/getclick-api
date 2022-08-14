@@ -9,12 +9,8 @@ import SignInType from './typing/SignInType';
 import { TokenType } from '../../data/misc/enums';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import Mailer from '../../modules/mailer';
-import {
-  frontBaseUrl,
-  frontResetPasswordUrl,
-  refreshTokenSecret,
-  verificationTokenSecret,
-} from '../../config';
+
+import { Environment } from '../../config';
 import { ResetPasswordRequestType } from './typing/PasswordType';
 
 export default class Auth {
@@ -52,17 +48,8 @@ export default class Auth {
       userId: user.id, token, type: TokenType.FORGOT_PASSWORD, email,
     });
 
-    await Mailer.sendEmail({
-      to: email,
-      subject: 'Reset your password',
-      template: 'forgot-password',
-      params: {
-        user,
-        data: {
-          link: `${frontBaseUrl}${frontResetPasswordUrl}?token=${token}`,
-        },
-      },
-    });
+    await Mailer.afterSignup(email);
+
     return { token };
   }
 
@@ -70,7 +57,7 @@ export default class Auth {
     const existToken = await Token.findOne({ where: { token, type: TokenType.FORGOT_PASSWORD } });
     if (!existToken) throw new UnauthorizedError(ERRORS.TOKEN_DOES_NOT_VALID);
     try {
-      await verify(token, verificationTokenSecret);
+      await verify(token, Environment.VerificationTokenSecret);
     } catch (err) {
       throw new UnauthorizedError(ERRORS.TOKEN_EXPIRED);
     }
@@ -81,7 +68,7 @@ export default class Auth {
   }
 
   async refreshTokenUpdate({ token } : { token: string }) {
-    const verifiedToken: { userId: string, role: string } = await verify(token, refreshTokenSecret);
+    const verifiedToken: { userId: string, role: string } = await verify(token, Environment.RefreshTokenSecret);
     const { userId } = verifiedToken;
     const refreshToken = await Token.findOne({ where: { userId, token } });
     if (!refreshToken) throw new UnauthorizedError(ERRORS.TOKEN_EXPIRED);
