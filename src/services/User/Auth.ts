@@ -1,31 +1,34 @@
 import { HttpError, UnauthorizedError } from 'routing-controllers';
+import { Inject, Service } from 'typedi';
 import { Token } from '../../data/models/Token';
 import { User } from '../../data/models/User';
 import { getClientIp } from '../../utils/request';
 import { generateTokens, generateTokenByParams, verify } from '../../utils/jwt';
-import UserService from './index';
+import UserService from './User';
 import SignUpType from './typing/SignUpType';
 import SignInType from './typing/SignInType';
 import { TokenType } from '../../data/misc/enums';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import Mailer from '../../modules/mailer';
-
 import { Environment } from '../../config';
 import { ResetPasswordRequestType } from './typing/PasswordType';
 
+@Service()
 export default class Auth {
+  constructor(@Inject() private userService: UserService) {}
+
   async signUp({ request, data }: { request: Request, data: SignUpType }) {
-    const user = await UserService.user.create({ data });
+    const user = await this.userService.create({ data });
     const ip = getClientIp({ request });
     const { accessToken, refreshToken } = await this.generateTokenDuringSign({ user, ip });
     return { user, accessToken, refreshToken };
   }
 
   async signIn({ request, data }: { request: Request, data: SignInType }) {
-    const user = await UserService.user.getByEmail(data.email);
+    const user = await this.userService.getByEmail(data.email);
     if (!user) throw new UnauthorizedError(ERRORS.EMAIL_OR_PASSWORD_NOT_VALID);
 
-    const password = await UserService.user.generatePassword(user.salt, data.password);
+    const password = await this.userService.generatePassword(user.salt, data.password);
 
     if (password !== user.password) throw new UnauthorizedError(ERRORS.EMAIL_OR_PASSWORD_NOT_VALID);
 
@@ -40,7 +43,7 @@ export default class Auth {
   }
 
   async forgotPassword({ email }: { email: string }) {
-    const user = await UserService.user.getByEmail(email);
+    const user = await this.userService.getByEmail(email);
     if (!user) throw new UnauthorizedError(ERRORS.USER_NOT_FOUND);
     const token = await generateTokenByParams({ email, type: TokenType.FORGOT_PASSWORD });
 
@@ -63,7 +66,7 @@ export default class Auth {
     }
     const user = await User.findOne({ where: { id: existToken.userId } });
     if (!user) throw new UnauthorizedError(ERRORS.USER_NOT_FOUND);
-    await UserService.user.setPassword(password, user);
+    await this.userService.setPassword(password, user);
     return user.toJSON();
   }
 

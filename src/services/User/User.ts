@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import { HttpError, NotFoundError } from 'routing-controllers';
+import { Service } from 'typedi';
 import SignUpType from './typing/SignUpType';
 import UserUpdateType from './typing/UserUpdateType';
 import UserGetType from './typing/UserGetType';
@@ -8,6 +9,7 @@ import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import { arrangeSequelizeInterfaceData } from '../../utils/sequelize';
 
+@Service()
 export default class UserService {
   async create({ data }: { data: SignUpType }) {
     const existUser = await User.findOne({ where: { email: data.email } });
