@@ -11,9 +11,9 @@ import { ERRORS, HTTP_CODES } from '../../constants';
 import UserService from '../../services/User/User';
 
 @Service()
-@JsonController('/user')
+@JsonController('/category')
 @Authorized(UserRoles.Admin)
-export default class UserController {
+export default class CategoryController {
   constructor(@Inject() private userService: UserService) {}
 
   @Post('/')

@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
-export default class PaginationQueryParamDto {
+export class PaginationQueryParamDto {
   @IsNumber()
   @IsOptional()
   @IsNotEmpty()
@@ -15,4 +15,10 @@ export default class PaginationQueryParamDto {
     this.offset = offset ?? this.offset;
     this.limit = limit ?? this.limit;
   }
+}
+
+export class QueryParamSearchDto extends PaginationQueryParamDto {
+  @IsOptional()
+  @IsNotEmpty()
+    searchKay: string;
 }

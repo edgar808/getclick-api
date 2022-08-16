@@ -78,6 +78,11 @@ export class Environment {
     ORDER_CONFIRMATION: 'ORDER CONFIRMATION',
     SHIPPING_STATUS: 'SHIPPING STATUS CHANGED',
   };
+
+  public static Pagination = {
+    Limit: 50,
+    Offset: 0,
+  };
 }
 
 export const { DB_CONFIG } = Environment;
