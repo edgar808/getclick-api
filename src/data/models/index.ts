@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import { Environment } from '../../config';
 import { User } from './User';
 import { Token } from './Token';
+import { Category } from './Category';
 
 const {
   database, username, password, host,
@@ -19,6 +20,7 @@ const sequelize = new Sequelize({
 sequelize.addModels([
   User,
   Token,
+  Category,
 ]);
 
 const DB = {
