@@ -1,5 +1,5 @@
 import {
-  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany,
+  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, ForeignKey,
 } from 'sequelize-typescript';
 import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
@@ -86,6 +86,33 @@ export class User extends Model {
     allowNull: false,
   })
     phone: string;
+
+  @Column({
+    type: DataType.DOUBLE,
+    allowNull: true,
+  })
+    viewPercent: number;
+
+  @Column({
+    type: DataType.DOUBLE,
+    allowNull: true,
+    defaultValue: 0,
+  })
+    level: number;
+
+  @Column({
+    type: DataType.DOUBLE,
+    allowNull: true,
+    defaultValue: 0,
+  })
+    nextLevel: number;
+
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.UUID,
+    allowNull: true,
+  })
+    inviter: string;
 
   @CreatedAt
     creationDate: Date;
