@@ -1,21 +1,3 @@
-export const SHIPMENT = {
-  RELATION: 'Shipment',
-  MODEL: 'Shipment',
-  ALIAS: {
-    SINGULAR: 'shipment',
-    PLURAL: 'shipments',
-  },
-};
-
-export const TRACK_POINT = {
-  RELATION: 'TrackPoint',
-  MODEL: 'TrackPoint',
-  ALIAS: {
-    SINGULAR: 'trackPoint',
-    PLURAL: 'trackPoints',
-  },
-};
-
 export const USER = {
   RELATION: 'User',
   MODEL: 'User',
@@ -34,29 +16,12 @@ export const TOKEN = {
   },
 };
 
-export const PICKUP = {
-  RELATION: 'Pickup',
-  MODEL: 'Pickup',
+export const CATEGORY = {
+  RELATION: 'Category',
+  MODEL: 'Category',
   ALIAS: {
-    SINGULAR: 'pickup',
-    PLURAL: 'pickups',
+    SINGULAR: 'category',
+    PLURAL: 'categories',
   },
 };
 
-export const DELIVERY = {
-  RELATION: 'Delivery',
-  MODEL: 'Delivery',
-  ALIAS: {
-    SINGULAR: 'delivery',
-    PLURAL: 'deliveries',
-  },
-};
-
-export const FEEDBACK = {
-  RELATION: 'Feedback',
-  MODEL: 'Feedback',
-  ALIAS: {
-    SINGULAR: 'feedback',
-    PLURAL: 'feedbacks',
-  },
-};
