@@ -1,5 +1,6 @@
 import { HttpError } from 'routing-controllers';
 import { Service } from 'typedi';
+import { Op } from 'sequelize';
 import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import { Category } from '../../data/models/Category';
@@ -9,8 +10,12 @@ import CategoryType from './typing/CategoryType';
 @Service()
 export default class CategoryService {
   async get({ limit = Environment.Pagination.Limit, offset = Environment.Pagination.Offset, searchKay }) {
+    const where = searchKay
+      ? { name: { [Op.iLike]: `%${searchKay}%` } }
+      : {};
     const result = await Category.findAndCountAll({
-      order: [['creationDate', 'DESC']],
+      where,
+      order: [['name', 'ASC']],
       limit,
       offset,
     });
@@ -32,6 +37,7 @@ export default class CategoryService {
   async destroy({ id } : { id: string }) {
     const category = await Category.findByPk(id);
     if (!category) throw new HttpError(HTTP_CODES.BadRequest, ERRORS.RESOURCE_NOT_FOUND);
-    return category.destroy();
+    await category.destroy();
+    return true;
   }
 }

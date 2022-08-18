@@ -9,11 +9,12 @@ import CategoryService from '../../services/Category/Category';
 import { QueryParamSearchDto } from '../dto/QueryParamsDto';
 
 @Service()
-@JsonController('/user')
+@JsonController('/category')
 @Authorized(UserRoles.Admin)
-export default class UserController {
+export default class CategoryController {
   constructor(@Inject() private categoryService: CategoryService) {}
 
+  @Authorized([UserRoles.Individual, UserRoles.Business])
   @Post('/')
   async create(@Body({ required: true }) body: CategoryRequestDto) {
     const created = await this.categoryService.create({ data: body });
