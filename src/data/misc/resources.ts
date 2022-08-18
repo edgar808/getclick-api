@@ -25,3 +25,12 @@ export const CATEGORY = {
   },
 };
 
+export const USER_CATEGORY = {
+  RELATION: 'UserCategory',
+  MODEL: 'UserCategory',
+  ALIAS: {
+    SINGULAR: 'userCategory',
+    PLURAL: 'userCategories',
+  },
+};
+

@@ -4,6 +4,7 @@ import {
 import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
 import { UserRoles } from '../misc/enums';
+import { Category } from './Category';
 import { Token } from './Token';
 
 @Table({
@@ -125,4 +126,13 @@ export class User extends Model {
 
   @HasMany(() => Token, 'userId')
     tokens: string[];
+
+  @HasMany(() => Category, 'userId')
+    categories: string[];
 }
+
+// through: LISTING_BRAND.MODEL,
+// as: BRAND.ALIAS.PLURAL,
+// foreignKey: 'listingId',
+// otherKey: 'brandId',
+
