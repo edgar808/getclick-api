@@ -17,25 +17,21 @@ export default class CategoryController {
   @Authorized([UserRoles.Individual, UserRoles.Business])
   @Post('/')
   async create(@Body({ required: true }) body: CategoryRequestDto) {
-    const created = await this.categoryService.create({ data: body });
-    return created;
+    await this.categoryService.create({ data: body });
   }
 
   @Put('/:id')
   async update(@Param('id') id: string, @Body({ required: true }) body: CategoryRequestDto) {
-    const update = await this.categoryService.update({ data: body, id });
-    return update;
+    await this.categoryService.update({ data: body, id });
   }
 
   @Get('/')
   async get(@QueryParams() query: QueryParamSearchDto) {
-    const users = await this.categoryService.get(query);
-    return users;
+    return this.categoryService.get(query);
   }
 
   @Delete('/:id')
   async destroy(@Param('id') id: string) {
-    const user = await this.categoryService.destroy({ id });
-    return user;
+    await this.categoryService.destroy({ id });
   }
 }

@@ -14,7 +14,6 @@ export default class CategoryController {
 
   @Get('/')
   async get(@QueryParams() query: QueryParamSearchDto) {
-    const users = await this.categoryService.get(query);
-    return users;
+    return this.categoryService.get(query);
   }
 }

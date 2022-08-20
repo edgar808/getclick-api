@@ -3,6 +3,7 @@ import { Environment } from '../../config';
 import { User } from './User';
 import { Token } from './Token';
 import { Category } from './Category';
+import { UserCategory } from './UserCategory';
 
 const {
   database, username, password, host,
@@ -21,6 +22,7 @@ sequelize.addModels([
   User,
   Token,
   Category,
+  UserCategory,
 ]);
 
 const DB = {

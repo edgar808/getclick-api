@@ -1,13 +1,15 @@
 import StatusController from './StatusController';
 import AuthController from './AuthController';
-import UserController from './UserController';
 import CategoryController from './CategoryController';
+import UserController from './User/UserController';
+import UserCategoryController from './User/UserCategoryController';
 
 const appControllers = [
   StatusController,
   AuthController,
-  UserController,
   CategoryController,
+  UserController,
+  UserCategoryController,
 ];
 
 export default appControllers;

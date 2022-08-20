@@ -11,6 +11,7 @@ import { Database } from './modules/initializators';
 import appControllers from './controllers/api';
 import adminControllers from './controllers/admin';
 import { bearer, currentUserChecker, basic } from './middlewares/authCheckers';
+import { PaginatorInterceptor } from './middlewares/PaginatorInterceptor';
 
 class ExpressServer {
   async init() {
@@ -34,6 +35,7 @@ class ExpressServer {
     useExpressServer(app, {
       routePrefix: '/api',
       controllers: appControllers,
+      interceptors: [PaginatorInterceptor],
       defaultErrorHandler: true,
       ...controllerOptions,
     });

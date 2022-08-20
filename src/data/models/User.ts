@@ -1,10 +1,12 @@
 import {
-  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, ForeignKey,
+  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, ForeignKey, BelongsToMany,
 } from 'sequelize-typescript';
 import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
 import { UserRoles } from '../misc/enums';
+import { Category } from './Category';
 import { Token } from './Token';
+import { UserCategory } from './UserCategory';
 
 @Table({
   timestamps: true,
@@ -125,4 +127,11 @@ export class User extends Model {
 
   @HasMany(() => Token, 'userId')
     tokens: string[];
+
+  @BelongsToMany(() => Category, {
+    as: 'categories',
+    through: () => UserCategory,
+  })
+    categories: string[];
 }
+
