@@ -7,7 +7,6 @@ import UserGetType from './typing/UserGetType';
 import { User } from '../../data/models/User';
 import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
-import { arrangeSequelizeInterfaceData } from '../../utils/sequelize';
 
 @Service()
 export default class UserService {
@@ -49,7 +48,7 @@ export default class UserService {
       attributes: { exclude: ['password', 'salt'] },
     });
     if (!user) throw new NotFoundError(ERRORS.USER_NOT_FOUND);
-    return user.toJSON();
+    return user;
   }
 
   async getFilterSort({ data }:{ data:UserGetType }) {
@@ -68,9 +67,7 @@ export default class UserService {
       offset,
     };
 
-    const users = await User.findAndCountAll(query);
-
-    return arrangeSequelizeInterfaceData({ data: users });
+    return User.findAndCountAll(query);
   }
 
   async destroy({ id }: { id: string }) {
@@ -81,6 +78,8 @@ export default class UserService {
   }
 
   /* end CRUD */
+
+  /* AUTH CHANGES */
 
   async getRandomUsername({ email }: any) {
     const [name] = email.split('@');
@@ -141,4 +140,5 @@ export default class UserService {
       salt,
     });
   }
+  /* END AUTH CHANGES */
 }

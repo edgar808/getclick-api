@@ -7,7 +7,7 @@ import { Category } from './Category';
 
 @Table({
   timestamps: true,
-  paranoid: true,
+  paranoid: false,
   schema: Environment.DB_SCHEMA,
   freezeTableName: true,
 })

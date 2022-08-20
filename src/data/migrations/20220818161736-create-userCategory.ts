@@ -28,6 +28,10 @@ export default {
           allowNull: false,
           references: { model: USER.MODEL, key: 'id' },
         },
+        creationDate: {
+          defaultValue: Sequelize.NOW,
+          type: Sequelize.DATE,
+        },
         updatedOn: {
           allowNull: Sequelize.NOW,
           type: Sequelize.DATE,

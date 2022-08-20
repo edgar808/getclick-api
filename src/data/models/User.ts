@@ -6,6 +6,7 @@ import { ERRORS } from '../../constants';
 import { UserRoles } from '../misc/enums';
 import { Category } from './Category';
 import { Token } from './Token';
+import { UserCategory } from './UserCategory';
 
 @Table({
   timestamps: true,
@@ -127,12 +128,13 @@ export class User extends Model {
   @HasMany(() => Token, 'userId')
     tokens: string[];
 
-  @HasMany(() => Category, 'userId')
-    categories: string[];
+  // @HasMany(() => Category, {
+  //   foreignKey: 'userId',
+  //   scope: {
+  //     through: 'UserCategory',
+  //     otherKey: 'categoryId',
+  //   },
+  // })
+  //   categories: string[];
 }
-
-// through: LISTING_BRAND.MODEL,
-// as: BRAND.ALIAS.PLURAL,
-// foreignKey: 'listingId',
-// otherKey: 'brandId',
 

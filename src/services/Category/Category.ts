@@ -4,22 +4,21 @@ import { Op } from 'sequelize';
 import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
 import { Category } from '../../data/models/Category';
-import { arrangeSequelizeInterfaceData } from '../../utils/sequelize';
 import CategoryType from './typing/CategoryType';
 
 @Service()
 export default class CategoryService {
   async get({ limit = Environment.Pagination.Limit, offset = Environment.Pagination.Offset, searchKay }) {
+    console.log(222);
     const where = searchKay
       ? { name: { [Op.iLike]: `%${searchKay}%` } }
       : {};
-    const result = await Category.findAndCountAll({
+    return Category.findAndCountAll({
       where,
       order: [['name', 'ASC']],
       limit,
       offset,
     });
-    return arrangeSequelizeInterfaceData({ data: result });
   }
 
   async create({ data }:{ data: CategoryType }) {

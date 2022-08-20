@@ -2,8 +2,8 @@ import {
   CurrentUser, Get, JsonController,
 } from 'routing-controllers';
 import { Service, Inject } from 'typedi';
-import UserDto from '../dto/user/UserDto';
-import UserService from '../../services/User/User';
+import UserDto from '../../dto/user/UserDto';
+import UserService from '../../../services/User/User';
 
 @Service()
 @JsonController('/user')

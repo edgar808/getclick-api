@@ -1,7 +1,8 @@
 import {
-  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType,
+  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, BelongsToMany,
 } from 'sequelize-typescript';
 import { Environment } from '../../config';
+import { User } from './User';
 
 @Table({
   timestamps: true,
@@ -33,4 +34,11 @@ export class Category extends Model {
 
   @DeletedAt
     deletionDate: Date;
+
+  // @BelongsToMany(()=>User, {
+  //   through:'UserCategory',
+  //   foreignKey: 'categoryId',
+  //   // as: 'users'
+  // })
+  //   users:string[];
 }
