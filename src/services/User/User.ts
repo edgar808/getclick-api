@@ -7,6 +7,8 @@ import UserGetType from './typing/UserGetType';
 import { User } from '../../data/models/User';
 import { Environment } from '../../config';
 import { ERRORS, HTTP_CODES } from '../../constants';
+import { Category } from '../../data/models/Category';
+import { CATEGORY } from '../../data/misc/resources';
 
 @Service()
 export default class UserService {
@@ -18,7 +20,7 @@ export default class UserService {
     const salt = crypto.randomBytes(Environment.CryptoConfig.hash.length).toString('hex');
     const password = await this.generatePassword(salt, data.password);
 
-    const user = await User.create({
+    await User.create({
       username,
       email: data.email,
       name: data.name,
@@ -27,25 +29,26 @@ export default class UserService {
       password,
       salt,
     });
-
-    const userJson = user.toJSON();
-    delete userJson.password;
-    delete userJson.salt;
-
-    return userJson;
   }
 
   async update({ id, data }: { id: string, data: UserUpdateType }) {
     const user = await User.findByPk(id, { attributes: { exclude: ['password', 'salt'] } });
     if (!user) throw new NotFoundError(ERRORS.USER_NOT_FOUND);
     await user.update(data);
-    return user.toJSON();
   }
 
   async getById({ id }: { id: string }) {
     const user = await User.findOne({
       where: { id },
       attributes: { exclude: ['password', 'salt'] },
+      include: [
+        {
+          model: Category,
+          as: CATEGORY.ALIAS.PLURAL,
+          attributes: ['id', 'name'],
+          through: { attributes: [] },
+        },
+      ],
     });
     if (!user) throw new NotFoundError(ERRORS.USER_NOT_FOUND);
     return user;

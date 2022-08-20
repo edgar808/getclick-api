@@ -19,31 +19,26 @@ export default class UserController {
   @Post('/')
   async create(@Body({ required: true }) body: SignUpRequestDto) {
     if (body.role === UserRoles.Admin) throw new HttpError(HTTP_CODES.Conflict, ERRORS.ADMIN_RESTRICTION);
-    const created = await this.userService.create({ data: body });
-    return created;
+    await this.userService.create({ data: body });
   }
 
   @Put('/:id')
   async update(@Param('id') id: string, @Body({ required: true }) body: UserUpdateDto) {
-    const update = await this.userService.update({ data: body, id });
-    return update;
+    await this.userService.update({ data: body, id });
   }
 
   @Get('/')
   async getFilterSort(@QueryParams() query: UserGetDto) {
-    const users = await this.userService.getFilterSort({ data: query });
-    return users;
+    return this.userService.getFilterSort({ data: query });
   }
 
   @Get('/:id')
   async getById(@Param('id') id: string) {
-    const user = await this.userService.getById({ id });
-    return user;
+    return this.userService.getById({ id });
   }
 
   @Delete('/:id')
   async destroy(@Param('id') id: string) {
-    const user = await this.userService.destroy({ id });
-    return user;
+    await this.userService.destroy({ id });
   }
 }

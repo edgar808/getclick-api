@@ -13,7 +13,6 @@ export default class UserController {
   @Get('/')
   async getById(@CurrentUser() user: UserDto) {
     const { id } = user;
-    const users = await this.userService.getById({ id });
-    return users;
+    return this.userService.getById({ id });
   }
 }

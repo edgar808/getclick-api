@@ -1,6 +1,6 @@
 import {
   Body,
-  CurrentUser, Delete, Get, JsonController, Param, Post,
+  CurrentUser, Delete, JsonController, Param, Post,
 } from 'routing-controllers';
 import { Service, Inject } from 'typedi';
 import UserDto from '../../dto/user/UserDto';

@@ -36,8 +36,8 @@ export class PaginatorInterceptor implements InterceptorInterface {
       }
       return this.sequelizeArrayDataToJSON(content);
     }
-
-    return content.toJSON();
+    if (content.dataValues) return content.toJSON();
+    return content;
   }
 }
 

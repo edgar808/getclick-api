@@ -1,5 +1,5 @@
 import {
-  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, ForeignKey,
+  Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt, DataType, HasMany, ForeignKey, BelongsToMany,
 } from 'sequelize-typescript';
 import { Environment } from '../../config';
 import { ERRORS } from '../../constants';
@@ -128,13 +128,10 @@ export class User extends Model {
   @HasMany(() => Token, 'userId')
     tokens: string[];
 
-  // @HasMany(() => Category, {
-  //   foreignKey: 'userId',
-  //   scope: {
-  //     through: 'UserCategory',
-  //     otherKey: 'categoryId',
-  //   },
-  // })
-  //   categories: string[];
+  @BelongsToMany(() => Category, {
+    as: 'categories',
+    through: () => UserCategory,
+  })
+    categories: string[];
 }
 
